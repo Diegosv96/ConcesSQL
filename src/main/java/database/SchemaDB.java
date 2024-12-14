@@ -9,4 +9,9 @@ public interface SchemaDB {
     String COL_CH_MAR = "marca";
     String COL_CH_MOD = "modelo";
     String COL_CH_COL = "color";
+    String TAB_PAS = "pasajeros";
+    String COL_NOM = "nombre";
+    String COL_ED = "edad";
+    String COL_PES = "peso";
+    String FK_COCH = "pasajeros_coches_FK";
 }

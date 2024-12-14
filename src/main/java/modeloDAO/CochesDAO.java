@@ -17,9 +17,8 @@ public class CochesDAO {
     private ResultSet resultSet;
     private String query;
 
-    public CochesDAO(){
-        DBConnection db = new DBConnection();
-        connection = db.getConnection();
+    public CochesDAO(Connection con){
+        connection = con;
     }
     public void insertarCoche(Coche coche) throws SQLException {
         query = String.format("INSERT into %s (%s,%s,%s,%s) VALUES (?,?,?,?)",
@@ -82,5 +81,20 @@ public class CochesDAO {
         }
 
         return coches;
+    }
+
+    public void updateCoche(Coche coche) throws SQLException {
+        query = String.format("UPDATE %s SET %s=?,%s=?,%s=?,%s=? WHERE %s=?",
+                SchemaDB.TAB_CH,
+                SchemaDB.COL_CH_COL, SchemaDB.COL_CH_MAT, SchemaDB.COL_CH_MAR, SchemaDB.COL_CH_MOD,
+                SchemaDB.COL_ID);
+        ps = connection.prepareStatement(query);
+        ps.setString(1,coche.getColor());
+        ps.setString(2,coche.getMatricula());
+        ps.setString(3,coche.getMarca());
+        ps.setString(4,coche.getModelo());
+        ps.setInt(5,coche.getId());
+
+        ps.execute();
     }
 }
