@@ -9,6 +9,7 @@ import modeloDAO.PasajerosDAO;
 import java.io.*;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class Concesionario {
@@ -47,7 +48,10 @@ public class Concesionario {
 
     public String buscarCoche(int id) {
         try{
-            return cochesDAO.buscarCoche(id).toString();
+            if(cochesDAO.buscarCoche(id) != null){
+                return cochesDAO.buscarCoche(id).toString();
+            }
+            return "No existe el coche buscado";
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -55,10 +59,19 @@ public class Concesionario {
 
     public void listarCoches() {
         try{
-            System.out.println("Coches:");
+            System.out.println("COCHES:");
             for (Coche coche : cochesDAO.listaCoches()) {
                 System.out.println(coche.toString());
             }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void modificarCoche(Coche coche){
+        try{
+            cochesDAO.updateCoche(coche);
+            System.out.println("Coche actualizado correctamente");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -107,7 +120,10 @@ public class Concesionario {
 
     public String buscarPasajero(int id){
         try {
-            return pasajerosDAO.selectPasajero(id).toString();
+            if(pasajerosDAO.selectPasajero(id) != null){
+                return pasajerosDAO.selectPasajero(id).toString();
+            }
+            return "No existe el pasajero buscado";
         } catch (SQLException e){
             throw new RuntimeException();
         }
@@ -115,7 +131,7 @@ public class Concesionario {
 
     public void listarPasajeros(){
         try {
-            System.out.println("Pasajeros:");
+            System.out.println("PASAJEROS:");
             for(Pasajero pas : pasajerosDAO.selectAllPasajeros()){
                 System.out.println(pas.toString());
             }
@@ -142,10 +158,10 @@ public class Concesionario {
     public String eliminarPasajeroCoche(int pasajeroId) {
         try {
             if(pasajerosDAO.selectPasajero(pasajeroId) == null){
-                return "No existe el pasajro seleccionado";
+                return "No existe el pasajero seleccionado";
             }
             pasajerosDAO.updatePasajeroFKNull(pasajeroId);
-            return "Pasajero añadido";
+            return "Pasajero eliminado";
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

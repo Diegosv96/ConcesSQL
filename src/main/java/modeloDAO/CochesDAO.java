@@ -51,16 +51,15 @@ public class CochesDAO {
         ps.setInt(1,id);
         resultSet = ps.executeQuery();
 
-        Coche c = new Coche();
         if(resultSet.next()){
             int idRes = resultSet.getInt(SchemaDB.COL_ID);
             String matricula = resultSet.getString(SchemaDB.COL_CH_MAT);
             String marca = resultSet.getString(SchemaDB.COL_CH_MAR);
             String modelo = resultSet.getString(SchemaDB.COL_CH_MOD);
             String color = resultSet.getString(SchemaDB.COL_CH_COL);
-            c = new Coche(idRes,matricula,marca,modelo,color);
+            return new Coche(idRes,matricula,marca,modelo,color);
         }
-        return c;
+        return null;
     }
 
     public ArrayList<Coche> listaCoches() throws SQLException {

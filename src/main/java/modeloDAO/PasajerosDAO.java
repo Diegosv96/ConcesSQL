@@ -44,22 +44,24 @@ public class PasajerosDAO {
     }
 
     public Pasajero selectPasajero(int id) throws SQLException {
-        query = String.format("SELCT * FROM %s WHERE %s=? LIMIT 1",
+        query = String.format("SELECT * FROM %s WHERE %s=? LIMIT 1",
                 SchemaDB.TAB_PAS,
                 SchemaDB.COL_ID);
         ps = connection.prepareStatement(query);
         ps.setInt(1,id);
 
         ResultSet resultSet = ps.executeQuery();
-        Pasajero pas = new Pasajero();
-        while(resultSet.next()){
+
+        if(resultSet.next()){
+            Pasajero pas = new Pasajero();
             pas.setId(resultSet.getInt(SchemaDB.COL_ID));
             pas.setNombre(resultSet.getString(SchemaDB.COL_NOM));
             pas.setEdad(resultSet.getInt(SchemaDB.COL_ED));
             pas.setPeso(resultSet.getInt(SchemaDB.COL_PES));
-            pas.setPasajeros_coches_FK(resultSet.getInt(SchemaDB.FK_COCH));
+            pas.setCocheId(resultSet.getInt(SchemaDB.FK_COCH));
+            return pas;
         }
-        return pas;
+        return null;
     }
 
     public List<Pasajero> selectAllPasajeros() throws SQLException{

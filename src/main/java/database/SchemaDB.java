@@ -13,5 +13,5 @@ public interface SchemaDB {
     String COL_NOM = "nombre";
     String COL_ED = "edad";
     String COL_PES = "peso";
-    String FK_COCH = "pasajeros_coches_FK";
+    String FK_COCH = "cocheId";
 }
