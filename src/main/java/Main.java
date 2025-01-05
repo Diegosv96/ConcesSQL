@@ -88,6 +88,7 @@ public class Main {
         }
 
         System.out.println("Fin del programa");
+        concesionario.cerrarConexion();
         scan.close();
     }
 
